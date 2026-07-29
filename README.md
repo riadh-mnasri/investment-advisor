@@ -1,43 +1,43 @@
 # RiaInvestor
 
-Application Streamlit personnelle pour suivre les marchés, une watchlist d'actions et faire ses calculs de gestion de risque et de projection DCA, depuis mobile ou desktop.
+Application personnelle de suivi des marchés et d'aide à la décision d'investissement : dashboard macro, watchlist d'actions, gestionnaire de risque et simulateur DCA/ROI.
 
 *(English version: [README.en.md](README.en.md))*
 
 ## Stack
 
-- Python
-- Streamlit
-- yfinance (données de marché)
-- pandas
-- Plotly
+- Next.js (App Router, Turbopack)
+- TypeScript
+- Tailwind CSS
+- yahoo-finance2 (données de marché)
+- Recharts
 
 ## Fonctionnalités
 
 - **Dashboard & Macro** : cours de l'or, de l'argent, EUR/USD, S&P 500, CAC 40, historique 6 mois de l'or avec moyenne mobile 50 jours.
-- **Top 10 Actions / Watchlist** : prix, variation du jour, plus bas/haut 52 semaines, PER, rendement du dividende, badge "zone d'opportunité" si le prix est proche de son plus bas annuel.
+- **Top 10 Actions / Watchlist** : nom de la société, prix, variation du jour, plus bas/haut 52 semaines, PER, rendement du dividende, badge "zone d'opportunité" si le prix est proche de son plus bas annuel.
 - **Gestionnaire de Risque** : calcul de la taille de position selon le capital, le risque toléré et le stop-loss.
 - **Simulateur ROI** : projection de patrimoine en DCA (capital initial + épargne mensuelle) sur 1 à 30 ans.
 
 ## Setup
 
 ```bash
-pip install -r requirements.txt
+npm install
 ```
 
-Copier `.streamlit/secrets.toml.example` vers `.streamlit/secrets.toml` et adapter le mot de passe (`APP_PASSWORD`). À défaut, le mot de passe par défaut `Invest2026!` s'applique.
+Copier `.env.local.example` vers `.env.local` et adapter le mot de passe (`APP_PASSWORD`). À défaut, le mot de passe par défaut `Invest2026!` s'applique.
 
 ## Lancer en local
 
 ```bash
-streamlit run app.py
+npm run dev
 ```
 
-Port dédié : **8517** (défini dans `.streamlit/config.toml`).
+Port dédié : **3600**.
 
 ## Déploiement
 
-Pas encore déployé. Streamlit Community Cloud est la piste la plus simple (connecter le repo GitHub, définir `APP_PASSWORD` dans les secrets de l'app).
+Déployé sur Vercel, connecté au repo GitHub (déploiement automatique sur push vers `main`). Variable d'environnement `APP_PASSWORD` à définir dans les réglages du projet Vercel.
 
 ## État d'avancement
 
@@ -45,7 +45,7 @@ Pas encore déployé. Streamlit Community Cloud est la piste la plus simple (con
 - [x] Watchlist Top 10 actions
 - [x] Gestionnaire de risque
 - [x] Simulateur ROI / DCA
-- [ ] Déploiement
+- [x] Déploiement Vercel
 
 ## Copyright
 
