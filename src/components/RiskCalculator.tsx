@@ -53,20 +53,20 @@ export function RiskCalculator() {
       <h2 className="text-lg font-semibold">Calculateur de taille de position</h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <NumberField label="Capital total du portefeuille ($)" value={capital} onChange={setCapital} step={100} />
-        <NumberField label="Prix d'achat prévu ($)" value={entryPrice} onChange={setEntryPrice} step={0.5} />
+        <NumberField label="Capital total du portefeuille (€)" value={capital} onChange={setCapital} step={100} />
+        <NumberField label="Prix d'achat prévu (€)" value={entryPrice} onChange={setEntryPrice} step={0.5} />
         <NumberField label="Risque max toléré par trade (%)" value={riskPct} onChange={setRiskPct} step={0.1} />
-        <NumberField label="Prix Stop-Loss ($)" value={stopLoss} onChange={setStopLoss} step={0.5} />
+        <NumberField label="Prix Stop-Loss (€)" value={stopLoss} onChange={setStopLoss} step={0.5} />
       </div>
 
       <div className="border-t border-border pt-6">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <ResultCard label="Montant max risqué" value={`${riskCash.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} $`} />
-          <ResultCard label="Risque par action" value={`${riskPerShare.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} $`} />
+          <ResultCard label="Montant max risqué" value={`${riskCash.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} €`} />
+          <ResultCard label="Risque par action" value={`${riskPerShare.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} €`} />
           <ResultCard label="Nombre d'actions max" value={`${maxShares}`} />
         </div>
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <ResultCard label="Capital total investi" value={`${totalInvested.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} $`} />
+          <ResultCard label="Capital total investi" value={`${totalInvested.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} €`} />
           <ResultCard label="% du portefeuille engagé" value={`${portfolioPct.toFixed(1)} %`} />
         </div>
       </div>

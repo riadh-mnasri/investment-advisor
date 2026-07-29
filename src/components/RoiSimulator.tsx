@@ -89,7 +89,7 @@ export function RoiSimulator() {
       <h2 className="text-lg font-semibold">Simulateur DCA (Dollar Cost Averaging)</h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <NumberField label="Capital initial ($)" value={capitalInitial} onChange={setCapitalInitial} step={100} />
+        <NumberField label="Capital initial (€)" value={capitalInitial} onChange={setCapitalInitial} step={100} />
         <NumberField
           label="Rendement annuel estimé (%)"
           value={rendementAnnuel}
@@ -97,7 +97,7 @@ export function RoiSimulator() {
           step={0.5}
         />
         <NumberField
-          label="Épargne mensuelle ajoutée ($)"
+          label="Épargne mensuelle ajoutée (€)"
           value={epargneMensuelle}
           onChange={setEpargneMensuelle}
           step={50}
@@ -119,15 +119,15 @@ export function RoiSimulator() {
         <div className="grid grid-cols-1 gap-3 border-t border-border pt-6 sm:grid-cols-3">
           <div className="rounded-xl border border-border bg-surface p-4">
             <p className="text-sm text-muted">Capital versé total</p>
-            <p className="mt-1 text-2xl font-semibold">{last.capitalVerse.toLocaleString("fr-FR")} $</p>
+            <p className="mt-1 text-2xl font-semibold">{last.capitalVerse.toLocaleString("fr-FR")} €</p>
           </div>
           <div className="rounded-xl border border-border bg-surface p-4">
             <p className="text-sm text-muted">Intérêts cumulés</p>
-            <p className="mt-1 text-2xl font-semibold text-gold">{last.interetsCumules.toLocaleString("fr-FR")} $</p>
+            <p className="mt-1 text-2xl font-semibold text-gold">{last.interetsCumules.toLocaleString("fr-FR")} €</p>
           </div>
           <div className="rounded-xl border border-border bg-surface p-4">
             <p className="text-sm text-muted">Patrimoine final</p>
-            <p className="mt-1 text-2xl font-semibold">{last.valeurTotale.toLocaleString("fr-FR")} $</p>
+            <p className="mt-1 text-2xl font-semibold">{last.valeurTotale.toLocaleString("fr-FR")} €</p>
           </div>
         </div>
       )}
