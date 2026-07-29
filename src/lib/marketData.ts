@@ -83,3 +83,46 @@ export function movingAverage(points: PricePoint[], window: number): (number | n
     return sum / window;
   });
 }
+
+export type StockPick = {
+  ticker: string;
+  name: string;
+  price: number | null;
+  annualizedReturnPercent: number | null;
+};
+
+const HISTORICAL_YEARS = 3;
+
+async function getAnnualizedReturn(ticker: string): Promise<number | null> {
+  const history = await getHistory(ticker, HISTORICAL_YEARS * 12);
+  if (history.length < 2) return null;
+
+  const start = history[0].close;
+  const end = history[history.length - 1].close;
+  const yearsSpanned = history.length / 252;
+  if (start <= 0 || yearsSpanned <= 0) return null;
+
+  return (Math.pow(end / start, 1 / yearsSpanned) - 1) * 100;
+}
+
+export async function getBestPicks(count = 3): Promise<StockPick[]> {
+  const picks = await Promise.all(
+    WATCHLIST_TICKERS.map(async (ticker) => {
+      const [quote, annualizedReturnPercent] = await Promise.all([
+        getQuote(ticker),
+        getAnnualizedReturn(ticker),
+      ]);
+      return {
+        ticker,
+        name: quote.name,
+        price: quote.price,
+        annualizedReturnPercent,
+      };
+    })
+  );
+
+  return picks
+    .filter((p) => p.annualizedReturnPercent !== null)
+    .sort((a, b) => (b.annualizedReturnPercent ?? 0) - (a.annualizedReturnPercent ?? 0))
+    .slice(0, count);
+}

@@ -10,6 +10,7 @@ const TABS = [
   { href: "/watchlist", label: "🎯 Top 10 Actions" },
   { href: "/risque", label: "🛡️ Gestionnaire de Risque" },
   { href: "/simulateur", label: "📈 Simulateur ROI" },
+  { href: "/investir", label: "💡 Épargne & Actions" },
 ];
 
 export function Nav() {

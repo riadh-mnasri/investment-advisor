@@ -1,50 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  Legend,
-  CartesianGrid,
-} from "recharts";
-
-type YearPoint = {
-  annee: number;
-  capitalVerse: number;
-  interetsCumules: number;
-  valeurTotale: number;
-};
-
-function simulate(
-  capitalInitial: number,
-  epargneMensuelle: number,
-  rendementAnnuel: number,
-  dureeAnnees: number
-): YearPoint[] {
-  const tauxMensuel = Math.pow(1 + rendementAnnuel / 100, 1 / 12) - 1;
-  let solde = capitalInitial;
-  let verse = capitalInitial;
-  const points: YearPoint[] = [];
-
-  for (let mois = 1; mois <= dureeAnnees * 12; mois++) {
-    solde = solde * (1 + tauxMensuel) + epargneMensuelle;
-    verse += epargneMensuelle;
-    if (mois % 12 === 0) {
-      points.push({
-        annee: mois / 12,
-        capitalVerse: Math.round(verse),
-        interetsCumules: Math.round(solde - verse),
-        valeurTotale: Math.round(solde),
-      });
-    }
-  }
-
-  return points;
-}
+import { simulateDca } from "@/lib/dca";
+import { DcaChart } from "@/components/DcaChart";
 
 function NumberField({
   label,
@@ -78,11 +36,9 @@ export function RoiSimulator() {
   const [dureeAnnees, setDureeAnnees] = useState(15);
 
   const data = useMemo(
-    () => simulate(capitalInitial, epargneMensuelle, rendementAnnuel, dureeAnnees),
+    () => simulateDca(capitalInitial, epargneMensuelle, rendementAnnuel, dureeAnnees),
     [capitalInitial, epargneMensuelle, rendementAnnuel, dureeAnnees]
   );
-
-  const last = data[data.length - 1];
 
   return (
     <div className="flex flex-col gap-6">
@@ -115,43 +71,8 @@ export function RoiSimulator() {
         </label>
       </div>
 
-      {last && (
-        <div className="grid grid-cols-1 gap-3 border-t border-border pt-6 sm:grid-cols-3">
-          <div className="rounded-xl border border-border bg-surface p-4">
-            <p className="text-sm text-muted">Capital versé total</p>
-            <p className="mt-1 text-2xl font-semibold">{last.capitalVerse.toLocaleString("fr-FR")} €</p>
-          </div>
-          <div className="rounded-xl border border-border bg-surface p-4">
-            <p className="text-sm text-muted">Intérêts cumulés</p>
-            <p className="mt-1 text-2xl font-semibold text-gold">{last.interetsCumules.toLocaleString("fr-FR")} €</p>
-          </div>
-          <div className="rounded-xl border border-border bg-surface p-4">
-            <p className="text-sm text-muted">Patrimoine final</p>
-            <p className="mt-1 text-2xl font-semibold">{last.valeurTotale.toLocaleString("fr-FR")} €</p>
-          </div>
-        </div>
-      )}
-
-      <div className="h-96 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-            <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
-            <XAxis dataKey="annee" tick={{ fill: "#8b93a1", fontSize: 12 }} tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} />
-            <YAxis tick={{ fill: "#8b93a1", fontSize: 12 }} tickLine={false} axisLine={false} />
-            <Tooltip
-              contentStyle={{
-                background: "#12161d",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 8,
-                fontSize: 13,
-              }}
-              labelStyle={{ color: "#8b93a1" }}
-            />
-            <Legend wrapperStyle={{ fontSize: 13 }} />
-            <Bar dataKey="capitalVerse" name="Capital versé" stackId="a" fill="#4a7c59" />
-            <Bar dataKey="interetsCumules" name="Intérêts cumulés" stackId="a" fill="#d9b34d" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="border-t border-border pt-6">
+        <DcaChart data={data} />
       </div>
     </div>
   );
